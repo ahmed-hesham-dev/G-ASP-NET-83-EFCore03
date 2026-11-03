@@ -26,5 +26,48 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
                .WithOne(c => c.Category)
                .HasForeignKey(c => c.CategoryId)
                .IsRequired();
+
+
+
+
+
+        builder.HasData(
+            new Category
+            {
+                Id = 1,
+                Name = "Programming",
+                Description = "Programming Courses",
+                ParentCategoryId = null
+            },
+            new Category
+            {
+                Id = 2,
+                Name = "Web Development",
+                Description = "Web Development Courses",
+                ParentCategoryId = 1
+            },
+            new Category
+            {
+                Id = 3,
+                Name = "Mobile Development",
+                Description = "Mobile Development Courses",
+                ParentCategoryId = 1
+            },
+            new Category
+            {
+                Id = 4,
+                Name = "ASP.NET",
+                Description = "ASP.NET Courses",
+                ParentCategoryId = 2
+            },
+            new Category
+            {
+                Id = 5,
+                Name = "Database",
+                Description = "Database Courses",
+                ParentCategoryId = null
+            }
+        );
+
     }
 }

@@ -47,6 +47,41 @@ namespace G_ASP_NET_83_EFCore3.Migrations
                     b.HasIndex("ParentCategoryId");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Programming Courses",
+                            Name = "Programming"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Web Development Courses",
+                            Name = "Web Development",
+                            ParentCategoryId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Mobile Development Courses",
+                            Name = "Mobile Development",
+                            ParentCategoryId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "ASP.NET Courses",
+                            Name = "ASP.NET",
+                            ParentCategoryId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Database Courses",
+                            Name = "Database"
+                        });
                 });
 
             modelBuilder.Entity("G_ASP_NET_83_EFCore3.Entities.Course", b =>
@@ -92,6 +127,78 @@ namespace G_ASP_NET_83_EFCore3.Migrations
                     b.HasIndex("InstructorId");
 
                     b.ToTable("Courses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            Description = "Learn C# from scratch",
+                            InstructorId = 1,
+                            IsPublished = true,
+                            Level = 0,
+                            Price = 500m,
+                            PublishedDate = new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "C# Fundamentals"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 4,
+                            Description = "Learn ASP.NET Core Web Development",
+                            InstructorId = 1,
+                            IsPublished = true,
+                            Level = 1,
+                            Price = 800m,
+                            PublishedDate = new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "ASP.NET Core"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 3,
+                            Description = "Mobile Development with Flutter",
+                            InstructorId = 2,
+                            IsPublished = true,
+                            Level = 0,
+                            Price = 600m,
+                            PublishedDate = new DateTime(2025, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "Flutter Basics"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 3,
+                            Description = "Advanced Mobile Development",
+                            InstructorId = 2,
+                            IsPublished = false,
+                            Level = 2,
+                            Price = 1000m,
+                            Title = "Advanced Flutter"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CategoryId = 5,
+                            Description = "Learn SQL and Database Basics",
+                            InstructorId = 3,
+                            IsPublished = true,
+                            Level = 0,
+                            Price = 400m,
+                            PublishedDate = new DateTime(2025, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "SQL Fundamentals"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CategoryId = 5,
+                            Description = "Advanced Database Concepts",
+                            InstructorId = 3,
+                            IsPublished = false,
+                            Level = 2,
+                            Price = 900m,
+                            Title = "Advanced Database"
+                        });
                 });
 
             modelBuilder.Entity("G_ASP_NET_83_EFCore3.Entities.Enrollment", b =>
@@ -150,6 +257,32 @@ namespace G_ASP_NET_83_EFCore3.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Instructors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Bio = "C# and ASP.NET Instructor",
+                            Email = "ahmed@example.com",
+                            FullName = "Ahmed Mohamed",
+                            JoinedDate = new DateTime(2024, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Bio = "Mobile Development Instructor",
+                            Email = "omar@example.com",
+                            FullName = "Omar Ali",
+                            JoinedDate = new DateTime(2024, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Bio = "Database Instructor",
+                            Email = "sara@example.com",
+                            FullName = "Sara Hassan",
+                            JoinedDate = new DateTime(2024, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("G_ASP_NET_83_EFCore3.Entities.Student", b =>
