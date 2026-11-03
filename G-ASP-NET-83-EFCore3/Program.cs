@@ -2,6 +2,7 @@
 using G_ASP_NET_83_EFCore3.Context;
 using G_ASP_NET_83_EFCore3.Entities;
 using G_ASP_NET_83_EFCore3.Entities.Enums;
+using G_ASP_NET_83_EFCore3.Operations;
 using Microsoft.EntityFrameworkCore;
 
 namespace G_ASP_NET_83_EFCore3
@@ -12,12 +13,12 @@ namespace G_ASP_NET_83_EFCore3
         {
             using var context = new AppDbContext();
 
+
             if (!context.Students.Any())
             {
                 context.Students.AddRange(
                     new Student
                     {
-                        // id identity will be generated automatically by the database
                         FullName = "Ali Mohamed",
                         Email = "ali@example.com",
                         DateOfBirth = new DateTime(2002, 5, 10)
@@ -51,7 +52,7 @@ namespace G_ASP_NET_83_EFCore3
                 context.SaveChanges();
             }
 
-            // Get Students IDs
+
             var aliId = context.Students
                 .Where(s => s.Email == "ali@example.com")
                 .Select(s => s.Id)
@@ -77,7 +78,7 @@ namespace G_ASP_NET_83_EFCore3
                 .Select(s => s.Id)
                 .First();
 
-            // Seed Enrollments
+
             if (!context.Enrollments.Any())
             {
                 context.Enrollments.AddRange(
@@ -159,6 +160,87 @@ namespace G_ASP_NET_83_EFCore3
             }
 
             Console.WriteLine("Seeding completed successfully!");
+
+
+            Console.WriteLine("\n========== CREATE OPERATIONS ==========");
+
+            if (!context.Instructors.Any(i =>
+                i.Email == "newinstructor@example.com"))
+            {
+                CreateOperations.AddInstructor(context);
+            }
+
+            if (!context.Courses.Any(c =>
+                c.Title == "New Course" &&
+                c.InstructorId == 1 &&
+                c.CategoryId == 1))
+            {
+                CreateOperations.AddCourse(context, 1, 1);
+            }
+
+            if (!context.Students.Any(s =>
+                s.Email == "khaled@example.com"))
+            {
+                CreateOperations.AddStudents(context);
+            }
+
+            var khaledId = context.Students
+                .Where(s => s.Email == "khaled@example.com")
+                .Select(s => s.Id)
+                .First();
+
+            CreateOperations.EnrollStudent(context, khaledId, 1);
+
+
+            Console.WriteLine("\n========== READ OPERATIONS ==========");
+
+            ReadOperations.FindCourseById(context, 1);
+
+            ReadOperations.FindCourseByTitle(
+                context, "C# Fundamentals");
+
+            ReadOperations.FilterCoursesByPrice(
+                context, 400, 900);
+
+            ReadOperations.GetSubCategories(context, 1);
+
+            ReadOperations.GetTopLevelCategories(context);
+
+            ReadOperations.GetCourseRoster(context, 1);
+
+
+            Console.WriteLine("\n========== UPDATE OPERATIONS ==========");
+
+            UpdateOperations.ChangeCoursePrice(
+                context, 1, 700);
+
+            UpdateOperations.UpdateProgress(
+                context, aliId, 2, 100);
+
+            UpdateOperations.PublishCourse(
+                context, 4);
+
+
+            Console.WriteLine("\n========== DELETE OPERATIONS ==========");
+
+            DeleteOperations.TryDeleteCategory(context, 1);
+
+            DeleteOperations.SafeDeleteCategory(context, 1);
+
+            DeleteOperations.UnenrollStudent(
+                context, aliId, 2);
+
+            DeleteOperations.DeleteCourse(context, 1);
+
+
+            Console.WriteLine("\n========== BULK OPERATIONS ==========");
+
+            BulkOperations.RaiseCoursePrices(
+                context, CourseLevel.Beginner);
+
+            BulkOperations.DeleteDroppedEnrollments(context);
+
+            Console.WriteLine("\nAll operations completed.");
         }
     }
 }
